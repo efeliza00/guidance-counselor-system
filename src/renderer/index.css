@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+.p-icon-field {
+  width: 100%;
+}

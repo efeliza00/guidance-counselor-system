@@ -1,0 +1,76 @@
+datasource db { 
+    provider = "sqlite"
+    url = env("DATABASE_URL")
+    
+}
+
+
+generator client {
+  provider        = "prisma-client-js" 
+
+}
+
+enum Status {
+    PENDING
+    IN_PROGRESS
+    RESOLVED
+    REJECTED
+}
+
+enum StudentRole {
+    COMPLAINANT
+    RESPONDENT
+}
+
+model Student {
+    id Int @id @default(autoincrement())
+    role StudentRole @default(COMPLAINANT)
+    name String
+    contact String
+
+
+    userId Int
+    user User @relation(fields: [userId] , references: [id])
+
+    complaint Complaint[] @relation("StudentComplaints")
+    createdAt    DateTime                @default(now())
+    updatedAt    DateTime                @updatedAt
+}
+model Complaint {
+    id Int @id @default(autoincrement())
+    title String
+    overview String
+    status Status @default(PENDING)
+    students Student[]  @relation("StudentComplaints")
+    resolution String?
+    userId Int 
+    user User @relation(fields: [userId] , references: [id])
+
+    createdAt    DateTime                @default(now())
+    updatedAt    DateTime                @updatedAt
+
+}
+
+model UserProfile {
+    id Int @id @default(autoincrement())
+    email String @unique
+    userId Int @unique
+    user User @relation(fields:[userId] , references: [id]) 
+
+        
+    createdAt    DateTime                @default(now())
+    updatedAt    DateTime                @updatedAt
+}
+
+model User { 
+    id Int  @id @default(autoincrement())
+    username String 
+    password  String 
+    profile  UserProfile?
+    complaints Complaint[]
+    students Student[]
+
+        
+    createdAt    DateTime                @default(now())
+    updatedAt    DateTime                @updatedAt
+}
