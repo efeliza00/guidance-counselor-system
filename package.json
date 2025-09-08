@@ -1,7 +1,7 @@
 {
   "name": "guidance-counseling-system-desktop",
   "productName": "guidance-counseling-system-desktop",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Desktop application for Managing Complaints and Resolutions for Guidance Counselors.",
   "main": ".vite/build/main.js",
   "scripts": {
